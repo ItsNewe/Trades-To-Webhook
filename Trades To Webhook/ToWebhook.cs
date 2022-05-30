@@ -49,9 +49,9 @@ namespace cAlgo
                 {
 
                     wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-                    string html_result = await Task.Run( () => wc.UploadString( myuri, post_params ) );
+                    string json_result = await Task.Run( () => wc.UploadString( myuri, post_params ) );
                                         
-                    response.Response = html_result;
+                    response.Response = json_result;
                     response.Error = 0;
                     return response;
                 }

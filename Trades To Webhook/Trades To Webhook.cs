@@ -16,6 +16,7 @@ using System.Windows.Forms;
 using cAlgo.API.Internals;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace cAlgo
 {
@@ -71,7 +72,7 @@ namespace cAlgo
 
         public const string NAME = "Trades To Webhook";
 
-        public const string VERSION = "1.0.0";
+        public const string VERSION = "1.0.1";
 
         #endregion
 
@@ -94,13 +95,13 @@ namespace cAlgo
         [Parameter("POST", Group = "Webhook", DefaultValue = "chat_id=[ @CHATID ]&text={0}")]
         public string PostParams { get; set; }
 
-        [Parameter("Opened (empty = disabled)", Group = "Messages", DefaultValue = "#{0} opened {1} position at {2} for {3} lots, stoploss {4} takeprofit {5} label '{6}'")]
+        [Parameter("Opened (empty = disabled)", Group = "Messages", DefaultValue = "#{0} opened {1} position at {2} for {3} lots; stoploss {4}; takeprofit {5}; label '{6}'")]
         public string MessageOpen { get; set; }
 
-        [Parameter("Modified (empty = disabled)", Group = "Messages", DefaultValue = "#{0} modified {1} position at {2} for {3} lots, stoploss {4} takeprofit {5} label '{6}'")]
+        [Parameter("Modified (empty = disabled)", Group = "Messages", DefaultValue = "#{0} modified {1} position at {2} for {3} lots; stoploss {4}; takeprofit {5}; label '{6}'")]
         public string MessageModify { get; set; }
 
-        [Parameter("Closed (empty = disabled)", Group = "Messages", DefaultValue = "#{0} closed {1} position at {2} for {3} lots, stoploss {4} takeprofit {5} label '{6}'")]
+        [Parameter("Closed (empty = disabled)", Group = "Messages", DefaultValue = "#{0} closed {1} position at {2} for {3} lots; stoploss {4}; takeprofit {5}; label '{6}'")]
         public string MessageClose { get; set; }
 
         #endregion
@@ -190,7 +191,9 @@ namespace cAlgo
 
             Task<Webhook.WebhookResponse> webhook_result = Task.Run(async() => await MyWebook.SendAsync(string.Format(PostParams, message_to_send)));
 
-            Print(webhook_result.Result.Response);
+            // --> We don't know which webhook the client is using, probably a json response
+            // --> var Telegram = JObject.Parse(webhook_result.Result.Response);
+            // --> Print(Telegram["ok"]);
 
         }
 
