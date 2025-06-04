@@ -53,8 +53,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ToWebhook.cs" />
-    <Compile Include="Trades To Webhook.cs" />
+    <Compile Include="TradesToWebhook.cs" />
+    <Compile Include="Webhook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
